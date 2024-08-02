@@ -16,6 +16,21 @@ header {
     text-align: center;
 }
 
+header input {
+    margin-top: 1em;
+    padding: 0.5em;
+    width: 50%;
+}
+
+aside {
+    margin: 1em 0;
+    width: 80%;
+}
+
+aside h2 {
+    margin: 0;
+}
+
 main {
     margin: 1em 0;
     width: 80%;
