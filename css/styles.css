@@ -51,3 +51,56 @@ article {
 h2 {
     color: #333;
 }
+
+/* Additional styles for the post detail page */
+.post-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    padding: 2em 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.post-header h1 {
+    font-size: 2.5em;
+    margin: 0.5em 0;
+}
+
+.post-header .post-date {
+    font-size: 1.2em;
+    color: #ddd;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-content h2 {
+    font-size: 2em;
+    margin-top: 0;
+}
+
+.post-content p {
+    line-height: 1.6em;
+    margin-bottom: 1em;
+}
+
+.post-footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em 0;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .post-header h1 {
+        font-size: 2em;
+    }
+
+    .post-content h2 {
+        font-size: 1.5em;
+    }
+}
