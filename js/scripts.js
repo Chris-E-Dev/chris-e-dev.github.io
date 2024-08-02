@@ -7,7 +7,7 @@ const searchInput = document.getElementById('search-input');
 const blogs = [
     { title: "Blog Post 1", teaser: "This is a teaser for blog post 1.", file: "blog/blog1.html" },
     { title: "Blog Post 2", teaser: "This is a teaser for blog post 2.", file: "blog/blog2.html" },
-	{ title: "Blog Post 3", teaser: "This is a teaser for blog post 3.", file: "blog/blog2.html" },
+	{ title: "Blog Post 3", teaser: "This is a teaser for blog post 3.", file: "blog/blog3.html" },
 	{ title: "Blog Post 4", teaser: "This is a teaser for blog post 4.", file: "blog/blog2.html" },
 	{ title: "Blog Post 5", teaser: "This is a teaser for blog post 5.", file: "blog/blog2.html" },
 	{ title: "Blog Post 6", teaser: "This is a teaser for blog post 6.", file: "blog/blog2.html" },
@@ -23,13 +23,19 @@ let filteredBlogs = [...blogs];
 const perPage = 10;
 let currentPage = 1;
 
-function renderBlogList() {
+async function fetchBlogContent(blog) {
+    const response = await fetch(blog.file);
+    const text = await response.text();
+    return text;
+}
+
+async function renderBlogList() {
     blogList.innerHTML = '';
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
     const currentBlogs = filteredBlogs.slice(start, end);
 
-    currentBlogs.forEach(blog => {
+    for (const blog of currentBlogs) {
         const article = document.createElement('article');
         const title = document.createElement('h2');
         const teaser = document.createElement('p');
@@ -48,7 +54,7 @@ function renderBlogList() {
         article.appendChild(teaser);
         article.appendChild(link);
         blogList.appendChild(article);
-    });
+    }
 
     renderPagination();
 }
@@ -91,12 +97,21 @@ function closeDetail() {
     detailContent.innerHTML = '';
 }
 
-function handleSearch() {
+async function handleSearch() {
     const query = searchInput.value.toLowerCase();
-    filteredBlogs = blogs.filter(blog => 
-        blog.title.toLowerCase().includes(query) || 
-        blog.teaser.toLowerCase().includes(query)
-    );
+    filteredBlogs = [];
+
+    for (const blog of blogs) {
+        const blogContent = await fetchBlogContent(blog);
+        if (
+            blog.title.toLowerCase().includes(query) ||
+            blog.teaser.toLowerCase().includes(query) ||
+            blogContent.toLowerCase().includes(query)
+        ) {
+            filteredBlogs.push(blog);
+        }
+    }
+
     currentPage = 1;
     renderBlogList();
 }
