@@ -2,6 +2,7 @@ const blogList = document.getElementById('blog-list');
 const pagination = document.getElementById('pagination');
 const blogDetail = document.getElementById('blog-detail');
 const detailContent = document.getElementById('detail-content');
+const searchInput = document.getElementById('search-input');
 
 const blogs = [
     { title: "Blog Post 1", teaser: "This is a teaser for blog post 1.", file: "blog/blog1.html" },
@@ -18,6 +19,7 @@ const blogs = [
     // Add more blog entries here
 ];
 
+let filteredBlogs = [...blogs];
 const perPage = 10;
 let currentPage = 1;
 
@@ -25,7 +27,7 @@ function renderBlogList() {
     blogList.innerHTML = '';
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
-    const currentBlogs = blogs.slice(start, end);
+    const currentBlogs = filteredBlogs.slice(start, end);
 
     currentBlogs.forEach(blog => {
         const article = document.createElement('article');
@@ -53,7 +55,7 @@ function renderBlogList() {
 
 function renderPagination() {
     pagination.innerHTML = '';
-    const totalPages = Math.ceil(blogs.length / perPage);
+    const totalPages = Math.ceil(filteredBlogs.length / perPage);
 
     for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement('button');
@@ -88,6 +90,18 @@ function closeDetail() {
     blogDetail.classList.add('hidden');
     detailContent.innerHTML = '';
 }
+
+function handleSearch() {
+    const query = searchInput.value.toLowerCase();
+    filteredBlogs = blogs.filter(blog => 
+        blog.title.toLowerCase().includes(query) || 
+        blog.teaser.toLowerCase().includes(query)
+    );
+    currentPage = 1;
+    renderBlogList();
+}
+
+searchInput.addEventListener('input', handleSearch);
 
 window.onload = () => {
     renderBlogList();
