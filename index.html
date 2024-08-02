@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Post</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <title>Simple Blog</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="post-header">
-        <div class="container">
-            <h1>First Post</h1>
-            <p class="post-date">July 22, 2024</p>
-        </div>
+    <header>
+        <h1>My Simple Blog</h1>
     </header>
-    <main class="container">
-        <article class="post-content">
-            <h2>My First Blog Post</h2>
-            <p>Welcome to my blog! This is my first post. Stay tuned for more updates.</p>
-            <!-- Add more content here -->
-        </article>
+    <main id="blog-list">
+        <!-- Blog list will be populated here -->
     </main>
-    <footer class="post-footer">
-        <p>© 2024 My Blog</p>
-    </footer>
+    <nav id="pagination">
+        <!-- Pagination buttons will be here -->
+    </nav>
+    <div id="blog-detail" class="hidden">
+        <button onclick="closeDetail()">Back</button>
+        <div id="detail-content"></div>
+    </div>
+    <script src="js/scripts.js"></script>
 </body>
 </html>
