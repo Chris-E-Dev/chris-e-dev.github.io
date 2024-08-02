@@ -8,7 +8,7 @@ const blogs = [
     { title: "Blog Post 1", teaser: "This is a teaser for blog post 1.", file: "blog/blog1.html" },
     { title: "Blog Post 2", teaser: "This is a teaser for blog post 2.", file: "blog/blog2.html" },
 	{ title: "Blog Post 3", teaser: "This is a teaser for blog post 3.", file: "blog/blog3.html" },
-	{ title: "Blog Post 4", teaser: "This is a teaser for blog post 4.", file: "blog/blog2.html" },
+	{ title: "Blog Post 4", teaser: "This is a teaser for blog post 4.", file: "blog/blog4.html" },
 	{ title: "Blog Post 5", teaser: "This is a teaser for blog post 5.", file: "blog/blog2.html" },
 	{ title: "Blog Post 6", teaser: "This is a teaser for blog post 6.", file: "blog/blog2.html" },
 	{ title: "Blog Post 7", teaser: "This is a teaser for blog post 7.", file: "blog/blog2.html" },
@@ -99,15 +99,14 @@ function closeDetail() {
 
 async function handleSearch() {
     const query = searchInput.value.toLowerCase();
+    const searchWords = query.split(/\s+/).filter(word => word.length > 0); // Split by whitespace and remove empty strings
     filteredBlogs = [];
 
     for (const blog of blogs) {
         const blogContent = await fetchBlogContent(blog);
-        if (
-            blog.title.toLowerCase().includes(query) ||
-            blog.teaser.toLowerCase().includes(query) ||
-            blogContent.toLowerCase().includes(query)
-        ) {
+        const textToSearch = `${blog.title.toLowerCase()} ${blog.teaser.toLowerCase()} ${blogContent.toLowerCase()}`;
+
+        if (searchWords.every(word => textToSearch.includes(word))) {
             filteredBlogs.push(blog);
         }
     }
